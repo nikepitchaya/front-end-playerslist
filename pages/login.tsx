@@ -1,10 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import BaseButton from "../components/base/base-button";
 import BaseInput from "../components/base/base-input";
+import api from "../plugins/api";
+import { setToken, setUser } from "../redux/user/slice";
+import UserLogin from "../models/request/UserLogin";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [position, setPosition] = useState<number>(1);
@@ -15,16 +23,23 @@ export default function Login() {
     "w-1/3 -translate-x-full duration-300",
   ];
 
-  function onSubmit(): void {
-    let error = validateForm();
+  async function onSubmit(): Promise<void> {
+    let error: string = validateForm();
     if (error) {
       alert(error);
-    } else {
-      let form = {
-        username: username,
-        password: password,
-      };
-      console.log(form);
+      return undefined;
+    }
+    let form: UserLogin = {
+      username: username,
+      password: password,
+    };
+    let token: string = await api.userLogin(form);
+    // console.log(token);
+    if (token) {
+      await dispatch(setToken(token));
+      let me = await api.userGetMe(token);
+      await dispatch(setUser(me));
+      router.push("/");
     }
   }
 
@@ -57,8 +72,12 @@ export default function Login() {
           classLabel="text-white"
         />
         <div className="w-full flex justify-between">
-          <Link href={"/register"}><p className="text-sm text-white underline">Register</p></Link>
-          <Link href={"/forgot"}><p className="text-sm text-white underline">Forgot password</p></Link>
+          <Link href={"/register"}>
+            <p className="text-sm text-white underline">Register</p>
+          </Link>
+          <Link href={"/forgot"}>
+            <p className="text-sm text-white underline">Forgot password</p>
+          </Link>
         </div>
       </div>
       <div className="w-1/3 flex justify-center">

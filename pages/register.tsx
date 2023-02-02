@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { type } from "os";
 import { useState } from "react";
 import BaseButton from "../components/base/base-button";
 import BaseInput from "../components/base/base-input";

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import BaseButton from "../../components/base/base-button";
-import Card from "../../components/mygame/card-mylist";
+import Card from "../../components/mygame/card";
 
 export default function MyGame() {
   const router = useRouter();

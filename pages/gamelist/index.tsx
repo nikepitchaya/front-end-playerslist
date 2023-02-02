@@ -2,13 +2,18 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import BaseButton from "../../components/base/base-button";
 import BaseInput from "../../components/base/base-input";
-import Card from "../../components/gamelist/card-alllist";
+import Card from "../../components/gamelist/card";
+import { useEffect } from "react";
 
 export default function Lobby() {
   const router = useRouter();
   const [gameId, setGameId] = useState<string>("");
   const [gameName, setGameName] = useState<string>("");
 
+  useEffect(() => {
+    
+  }, [])
+  
   return (
     <div className="w-full flex flex-col items-center py-8">
       <div className="p-4 mb-8 bg-blood rounded-md">

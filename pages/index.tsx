@@ -1,16 +1,23 @@
-
 import Image from "next/image";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import UserMe from "../models/response/UserMe";
+import { getToken, getUser } from "../redux/user/slice";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
+  const me: UserMe = useSelector(getUser);
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-full relative">
         <div className="w-fit absolute top-48 left-[320px] drop-shadow-xl">
           <h1 className="text-6xl animate-bounce">
-            Welcome to{" "}
-            <Link href="/mygame"><span className="text-[#FFEF00] hover:underline ">Players List</span></Link>
+            Welcome {me && <span className="text-blood">{me.name}</span>} to
+            <Link href="/mygame">
+              <span className="text-[#FFEF00] hover:underline ">
+                Players List
+              </span>
+            </Link>
           </h1>
         </div>
         <Image src="/home_v2.jpeg" alt="Home" width={1920} height={0} />
