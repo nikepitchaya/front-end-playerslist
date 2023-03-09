@@ -8,7 +8,7 @@ interface Props {
   style?: string;
   label?: string;
   classLabel?: string;
-  className?:String;
+  className?:string;
   required?: boolean;
 }
 

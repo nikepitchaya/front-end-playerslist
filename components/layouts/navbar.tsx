@@ -21,7 +21,7 @@ export default function Navbar() {
     await dispatch(clearUser());
     setTimeout(() => {
       router.push("/login");
-    }, 1000);
+    }, 500);
   };
 
   return (
@@ -30,11 +30,11 @@ export default function Navbar() {
         <Image src="/logo.png" alt="Players List Logo" width={100} height={0} />
       </Link>
       <div className="flex items-center space-x-6 text-lg">
-        <Link href={"/mygame"}>
+        {token &&<Link href={"/mygame"}>
           <p className="text-[#80FFEE] text-lg tracking-tight hover:underline">
             My Game
           </p>
-        </Link>
+        </Link>}
         <Link href={"/gamelist"}>
           <p className="text-[#80FFEE] text-lg tracking-tight hover:underline">
             Game List
@@ -75,7 +75,7 @@ export default function Navbar() {
               </p>
               <Logout className="h-8 w-8" fill="#FFEF00" />
             </div> */}
-            {toggle && (
+            {/* {toggle && (
               <div className="w-full h-24 flex flex-col bg-white pt-2 space-y-2 absolute right-0 z-50 mt-10 origin-top-right rounded-b-sm">
                 <p>Hello</p>
               </div>
@@ -128,7 +128,7 @@ export default function Navbar() {
               //     </p>
               //   </div>
               // </div>
-            )}
+            )} */}
           </div>
         )}
       </div>

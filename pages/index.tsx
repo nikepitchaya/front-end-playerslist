@@ -12,7 +12,7 @@ export default function Home() {
       <div className="w-full relative">
         <div className="w-fit absolute top-48 left-[320px] drop-shadow-xl">
           <h1 className="text-6xl animate-bounce">
-            Welcome {me && <span className="text-blood">{me.name}</span>} to
+            Welcome {me && <span className="text-blood"> {me.name}</span>} to {" "}
             <Link href="/mygame">
               <span className="text-[#FFEF00] hover:underline ">
                 Players List

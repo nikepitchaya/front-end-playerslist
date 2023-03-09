@@ -2,16 +2,18 @@ import axios, { AxiosResponse } from "axios"
 import UserLogin from "../models/request/UserLogin"
 import UserRegister from "../models/request/UserRegister"
 import UserMe from "../models/response/UserMe"
+import GameList from "../models/response/GameList"
+import UserAddMyGame from "../models/request/UserAddMyGame"
 
 // BaseUrl
 const basePath: string = 'https://localhost:44382/api/v1'
-// Content-Type
-const content_type: string = 'application/json'
+
 // Perform localStorage
 const getToken = (): string | null => {
-    var token: string | null = localStorage.getItem('token')
+    let token: string | null = localStorage.getItem('token')
     return token
 }
+
 // Headers
 let headerAuthJson = {
     Authorization: true,
@@ -19,7 +21,8 @@ let headerAuthJson = {
 };
 
 // Call Api
-const userGetMe = async (token: string): Promise<UserMe> => {
+const userGetMe = async (): Promise<UserMe> => {
+    let token: string | null = getToken()
     let response: AxiosResponse<UserMe> = await axios.get(`${basePath}/me`, { headers: { "Authorization": token } })
     return response.data
 }
@@ -34,5 +37,21 @@ const userLogin = async (form: UserLogin): Promise<string> => {
     return response.data
 }
 
+const userGetGameList = async (): Promise<GameList[]> => {
+    let response: AxiosResponse<GameList[]> = await axios.get(`${basePath}/allgamecategory`)
+    return response.data
+}
+
+const userAddMyGame = async (form: UserAddMyGame): Promise<string> => {
+    let token: string | null = getToken()
+    let response: AxiosResponse<string> = await axios.post(`${basePath}/addgamecategory`, form, { headers: { "Authorization": token } })
+    return response.data
+}
+
+const userGetMyGameList = async (): Promise<GameList[]> => {
+    let response: AxiosResponse<GameList[]> = await axios.get(`${basePath}/mygamecategory`)
+    return response.data
+}
+
 //Exports
-export default { guestCreateUser, userLogin, userGetMe }
+export default { guestCreateUser, userLogin, userGetMe, userGetGameList, userAddMyGame, userGetMyGameList }

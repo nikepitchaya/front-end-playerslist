@@ -9,7 +9,9 @@ interface Props {
 }
 
 const BaseButton: NextPage<Props> = (props) => {
+  
   const { onMouseOver, onClick, slot, className, style = "sun" } = props;
+
   const getStyle = () => {
     let customDefault = "";
     if (style == "dark") {

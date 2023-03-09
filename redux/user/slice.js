@@ -18,8 +18,8 @@ const userSlice = createSlice({
             state.user = action.payload
         },
         setToken: (state, action) => {
-            const t = JSON.stringify(action.payload)
-            localStorage.setItem('token', t)
+            // const t = JSON.stringify(action.payload)
+            localStorage.setItem('token', action.payload)
             state.token = action.payload
         },
         clearUser: (state) => {

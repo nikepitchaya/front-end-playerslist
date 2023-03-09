@@ -37,7 +37,7 @@ export default function Login() {
     // console.log(token);
     if (token) {
       await dispatch(setToken(token));
-      let me = await api.userGetMe(token);
+      let me = await api.userGetMe();
       await dispatch(setUser(me));
       router.push("/");
     }
