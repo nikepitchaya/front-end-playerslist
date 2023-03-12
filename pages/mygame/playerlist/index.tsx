@@ -13,7 +13,7 @@ export default function PlayerList() {
     <div className="w-full flex flex-col items-center py-8">
       <div className="p-4 mb-8 bg-blood rounded-md">
         <p className="text-5xl text-sky">
-          Players List <span className="text-sun">Valorant</span>
+          Players List <span className="text-sun">{router.query.name}</span>
         </p>
       </div>
       <div className="w-11/12 flex justify-between items-end p-4 mb-4 bg-white bg-opacity-50 rounded-md">
@@ -33,7 +33,7 @@ export default function PlayerList() {
           <BaseButton slot="Search" style="blood" className="w-1/2 h-[38px]" />
           <BaseButton
             onClick={() => {
-              router.push("/mygame/addplayer/valorant");
+              router.push(`/mygame/addplayer?id=${router.query.id}&name=${router.query.name}`);
             }}
             slot="Add Player"
             style="lime"

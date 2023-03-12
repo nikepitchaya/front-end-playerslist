@@ -11,10 +11,10 @@ export default function CardGameList(props: any) {
   }
 
   return (
-    <div onClick={() => {router.push(`/gamelist/${props.id}`)}}
+    <div 
       className="w-fit p-2 my-2 space-y-2 bg-sun hover:ring-[4px] ring-grape cursor-pointer hover:drop-shadow-[0_2px_10px_rgba(160,32,240,1)]">
       <img
-        src={props.url_video}
+        src={props.url_picture}
         alt="Valorant"
         className="w-[200px] h-[280px] "
       />

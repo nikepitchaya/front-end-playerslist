@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Router, useRouter } from "next/router";
 import { useState } from "react";
 import BaseButton from "../components/base/base-button";
 import BaseInput from "../components/base/base-input";
 import BaseSelect from "../components/base/base-select";
+import api from "../plugins/api";
 
 interface Options {
   label: string;
@@ -11,6 +13,7 @@ interface Options {
 }
 
 export default function Register() {
+  const router = useRouter();
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -42,10 +45,15 @@ export default function Register() {
       let form = {
         username: username,
         email: email,
-        gameCategory: gameCategory.map((e) => e.value),
+        name: name,
+        // gameCategory: gameCategory.map((e) => e.value),
         password: password,
       };
-      console.log(form);
+      // console.log(form);
+      let data = api.guestCreateUser(form);
+      if (data != null) {
+        router.push("/login")
+      }
     }
   }
 
@@ -132,18 +140,12 @@ export default function Register() {
       <div className="w-1/2 flex justify-center">
         <BaseButton
           onMouseOver={() => {
-            if (
-              !username ||
-              !password ||
-              !name ||
-              !checkPassword ||
-              !email
-            )
+            if (!username || !password || !name || !checkPassword || !email)
               position == 0 ? setPosition(2) : setPosition(0);
           }}
           onClick={onSubmit}
           slot="Register"
-          className={movingStyle[position]+' '+'text-xl'}
+          className={movingStyle[position] + " " + "text-xl"}
         />
       </div>
     </div>

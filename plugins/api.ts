@@ -3,8 +3,8 @@ import UserLogin from "../models/request/UserLogin"
 import UserRegister from "../models/request/UserRegister"
 import UserMe from "../models/response/UserMe"
 import GameList from "../models/response/GameList"
+import UserGameList from "../models/response/UserGameList"
 import UserAddMyGame from "../models/request/UserAddMyGame"
-
 // BaseUrl
 const basePath: string = 'https://localhost:44382/api/v1'
 
@@ -28,6 +28,7 @@ const userGetMe = async (): Promise<UserMe> => {
 }
 
 const guestCreateUser = async (form: UserRegister): Promise<UserMe> => {
+    // console.log("TEST")
     let response: AxiosResponse<UserMe> = await axios.post(`${basePath}/register`, form)
     return response.data
 }
@@ -48,8 +49,9 @@ const userAddMyGame = async (form: UserAddMyGame): Promise<string> => {
     return response.data
 }
 
-const userGetMyGameList = async (): Promise<GameList[]> => {
-    let response: AxiosResponse<GameList[]> = await axios.get(`${basePath}/mygamecategory`)
+const userGetMyGameList = async (): Promise<UserGameList[]> => {
+    let token: string | null = getToken()
+    let response: AxiosResponse<UserGameList[]> = await axios.get(`${basePath}/mygamecategory`,{ headers: { "Authorization": token } })
     return response.data
 }
 
