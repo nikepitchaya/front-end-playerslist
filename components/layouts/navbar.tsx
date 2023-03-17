@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import UserMe from "../../models/response/UserMe";
 import { clearUser, getToken, getUser } from "../../redux/user/slice";
@@ -23,6 +23,10 @@ export default function Navbar() {
       router.push("/login");
     }, 500);
   };
+
+  useEffect(() => {
+    console.log(router.asPath)
+  }, [router.asPath])
 
   return (
     <div className="w-full h-[58px] flex justify-between pl-4 z-40 overflow-hidden bg-[#DB0062]">
@@ -46,11 +50,11 @@ export default function Navbar() {
         {!token && (
           <div className="flex px-6 space-x-2">
             <Link href={"/login"}>
-              <p className="text-[#80FFEE] text-lg hover:underline">Login </p>
+              <p className={router.asPath == "/login" ? "text-[#80FFEE] underline drop-shadow-[0_0px_8px_rgba(255,255,255)]" :"text-[#80FFEE] hover:underline"}>Login </p>
             </Link>
             <p className="text-sky">|</p>
             <Link href={"/register"}>
-              <p className="text-[#80FFEE] text-lg hover:underline">Register</p>
+              <p className={router.asPath == "/register" ? "text-[#80FFEE] underline drop-shadow-[0_0px_8px_rgba(255,255,255)]" :"text-[#80FFEE] text-lg hover:underline"}>Register</p>
             </Link>
           </div>
         )}

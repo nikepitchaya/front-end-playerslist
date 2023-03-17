@@ -10,8 +10,8 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col items-center">
       <div className="w-full relative">
-        <div className="w-fit absolute top-48 left-[320px] drop-shadow-xl">
-          <h1 className="text-6xl animate-bounce">
+        <div className="w-full absolute top-48 drop-shadow-xl">
+          <h1 className="text-6xl animate-bounce text-center">
             Welcome {me && <span className="text-blood"> {me.name}</span>} to {" "}
             <Link href="/mygame">
               <span className="text-[#FFEF00] hover:underline ">

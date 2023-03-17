@@ -5,6 +5,9 @@ import UserMe from "../models/response/UserMe"
 import GameList from "../models/response/GameList"
 import UserGameList from "../models/response/UserGameList"
 import UserAddMyGame from "../models/request/UserAddMyGame"
+import UserAddPlayer from "../models/request/UserAddNewPlayer"
+import UserPlayer from "../models/response/UserPlayer"
+import UserGetPlayerByGameCategoryId from "../models/request/UserGetPlayerByGameCategoryId"
 // BaseUrl
 const basePath: string = 'https://localhost:44382/api/v1'
 
@@ -51,9 +54,33 @@ const userAddMyGame = async (form: UserAddMyGame): Promise<string> => {
 
 const userGetMyGameList = async (): Promise<UserGameList[]> => {
     let token: string | null = getToken()
-    let response: AxiosResponse<UserGameList[]> = await axios.get(`${basePath}/mygamecategory`,{ headers: { "Authorization": token } })
+    let response: AxiosResponse<UserGameList[]> = await axios.get(`${basePath}/mygamecategory`, { headers: { "Authorization": token } })
     return response.data
 }
 
+const userAddNewPlayer = async (form: UserAddPlayer): Promise<UserPlayer> => {
+    let token: string | null = getToken()
+    let response: AxiosResponse<UserPlayer> = await axios.post(`${basePath}/create_player`, form, { headers: { "Authorization": token } })
+    return response.data
+}
+
+const userGetAllPlayer = async (userGameCategoryId: number): Promise<UserPlayer[]> => {
+    let token: string | null = getToken()
+    let response: AxiosResponse<UserPlayer[]> = await axios.get(`${basePath}/getallplayer`, { headers: { "Authorization": token }, params: { userGameCategoryId: userGameCategoryId } })
+    return response.data
+}
+
+const userDeletePlayer = async (playerId: number): Promise<UserPlayer[]> => {
+    let token: string | null = getToken()
+    let response: AxiosResponse<UserPlayer[]> = await axios.delete(`${basePath}/delete_player`, { headers: { "Authorization": token }, params: { playerId: playerId } })
+    return response.data
+}
+
+// const userGetAllPlayer = async (form : UserGetPlayerByGameCategoryId): Promise<UserPlayer[]> => {
+//     let token: string | null = getToken()
+//     let response: AxiosResponse<UserPlayer[]> = await axios.get(`${basePath}/getallplayer`, form, { headers: { "Authorization": token } })
+//     return response.data
+// }
+
 //Exports
-export default { guestCreateUser, userLogin, userGetMe, userGetGameList, userAddMyGame, userGetMyGameList }
+export default { guestCreateUser, userLogin, userGetMe, userGetGameList, userAddMyGame, userGetMyGameList, userAddNewPlayer, userGetAllPlayer,userDeletePlayer }

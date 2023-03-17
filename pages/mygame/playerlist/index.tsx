@@ -1,13 +1,54 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BaseButton from "../../../components/base/base-button";
 import BaseInput from "../../../components/base/base-input";
+import BaseModal from "../../../components/base/base-modal";
 import Card from "../../../components/gamelist/card";
+import Trash from "../../../components/icon/trash";
+import UserPlayer from "../../../models/response/UserPlayer";
+import api from "../../../plugins/api";
 
 export default function PlayerList() {
   const router = useRouter();
   const [playerId, setPlayerId] = useState<string>("");
   const [playerName, setPlayerName] = useState<string>("");
+  const [player, setPlayer] = useState<UserPlayer[]>([]);
+
+   // Modal setting
+   const [title, setTitle] = useState<string>("")
+   const [content, setContent] = useState<string>("");
+   const [showModal, setShowModal] = useState<boolean>(false);
+ 
+   const modalSetting = async () => {
+     let title = "Delete Player"
+     await setTitle(title)
+     let content = `Do you want to delete "${player}" from your list? `
+     await setContent(content)
+     setShowModal(true)
+   }
+
+  const getAllPlayer = async () => {
+    let userGameCategoryId = await parseInt(router.query.id)
+    let data = await api.userGetAllPlayer(userGameCategoryId)
+    if (data) {
+      console.log(data)
+      setPlayer([...data])
+    }
+  }
+
+  const getPlayerType = (playerType: number): string => {
+    let response = ""
+    if (playerType == 6) response = "Masterful"
+    return response
+  }
+
+  const deletePlayer = () => {
+    let data = api.userDeletePlayer()
+  }
+
+  useEffect(() => {
+    getAllPlayer();
+  }, [])
 
   return (
     <div className="w-full flex flex-col items-center py-8">
@@ -50,22 +91,23 @@ export default function PlayerList() {
               <th className="py-4 px-0.5">Player Type</th>
               <th className="py-4 px-0.5">Created at</th>
               <th className="py-4 px-0.5">More Details</th>
+              <th className="py-4 px-0.5"></th>
             </tr>
           </thead>
           <tbody>
-            {[...Array(8)].map((e, i) => (
-              <tr className="text-center  text-gray-600 hover:bg-grass">
+            {player.map((e, i) => (
+              <tr key={i} className="text-center  text-gray-600 hover:bg-grass">
                 <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  Alfreds Futterkiste
+                  {e.id}
                 </td>
                 <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  Maria Anders
+                  {e.name}
                 </td>
                 <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  Germany
+                  {getPlayerType(e.type_id)}
                 </td>
                 <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  Germany
+                  {e.updated_at}
                 </td>
                 <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
                   <BaseButton
@@ -77,11 +119,17 @@ export default function PlayerList() {
                     className="w-1/2"
                   />
                 </td>
+                <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
+                  <div onClick={modalSetting}>
+                    <Trash className="h-6 w-6 hover:scale-110 cursor-pointer" fill="#DB0062" />
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <BaseModal onClick={deletePlayer} title={title} content={content} showModal={showModal} setShowModal={setShowModal} />
     </div>
   );
 }
