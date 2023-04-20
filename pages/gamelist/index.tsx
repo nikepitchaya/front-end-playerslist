@@ -43,10 +43,12 @@ export default function Lobby() {
 
   const addMyGame = async () => {
     let payload = await {
-      game_category_id : id
+      game_category_id: id
     }
     let response = await api.userAddMyGame(payload)
-    if (response) console.log(response)
+    if (response) {
+      console.log(response)
+    }
     await setId(0)
     setShowModal(false)
   }

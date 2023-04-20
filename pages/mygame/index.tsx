@@ -13,6 +13,7 @@ export default function MyGame() {
   const getGameList = async () => {
     let data = await api.userGetMyGameList();
     setGameList([...data]);
+    console.log(data)
   };
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <div className="w-full flex flex-col items-center justify-center py-4 space-y-2 bg-[#DB0062]">
+    <div className="bottom-0 w-full flex flex-col items-center justify-center py-4 space-y-2 bg-[#DB0062] ">
       <div className="w-full flex justify-center items-center space-x-4">
         <p className="text-[#80FFEE]">
           Players List is a personal project. Made for educational and practice

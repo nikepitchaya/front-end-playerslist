@@ -10,22 +10,24 @@ import api from "../../../plugins/api";
 
 export default function PlayerList() {
   const router = useRouter();
-  const [playerId, setPlayerId] = useState<string>("");
+  const [playerIds, setPlayerIds] = useState<string>("");
+  const [playerId, setPlayerId] = useState<number>(0);
   const [playerName, setPlayerName] = useState<string>("");
   const [player, setPlayer] = useState<UserPlayer[]>([]);
 
-   // Modal setting
-   const [title, setTitle] = useState<string>("")
-   const [content, setContent] = useState<string>("");
-   const [showModal, setShowModal] = useState<boolean>(false);
- 
-   const modalSetting = async () => {
-     let title = "Delete Player"
-     await setTitle(title)
-     let content = `Do you want to delete "${player}" from your list? `
-     await setContent(content)
-     setShowModal(true)
-   }
+  // Modal setting
+  const [title, setTitle] = useState<string>("")
+  const [content, setContent] = useState<string>("");
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  const modalSetting = async (id: number) => {
+    let title = "Delete Player"
+    await setTitle(title)
+    let content = `Do you want to delete "${player}" from your list? `
+    await setContent(content)
+    await setPlayerId(id)
+    setShowModal(true)
+  }
 
   const getAllPlayer = async () => {
     let userGameCategoryId = await parseInt(router.query.id)
@@ -39,11 +41,20 @@ export default function PlayerList() {
   const getPlayerType = (playerType: number): string => {
     let response = ""
     if (playerType == 6) response = "Masterful"
+    else if (playerType == 5) response = "Stupid";
+    else if (playerType == 4) response = "Cheat";
+    else if (playerType == 3) response = "Distrub";
+    else if (playerType == 2) response = "Toxic";
+    else if (playerType == 1) response = "Kind";
     return response
   }
 
-  const deletePlayer = () => {
-    let data = api.userDeletePlayer()
+  const deletePlayer = async () => {
+    let data = await api.userDeletePlayer(playerId)
+    if (data) {
+      getAllPlayer();
+      setShowModal(false);
+    }
   }
 
   useEffect(() => {
@@ -61,7 +72,7 @@ export default function PlayerList() {
         <div className="w-1/2 flex space-x-2">
           <BaseInput
             label="Player Id"
-            setState={setPlayerId}
+            setState={setPlayerIds}
             className="w-1/2"
           />
           <BaseInput
@@ -95,7 +106,7 @@ export default function PlayerList() {
             </tr>
           </thead>
           <tbody>
-            {player.map((e, i) => (
+            {player.length != 0 ? (player.map((e, i) => (
               <tr key={i} className="text-center  text-gray-600 hover:bg-grass">
                 <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
                   {e.id}
@@ -120,12 +131,16 @@ export default function PlayerList() {
                   />
                 </td>
                 <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  <div onClick={modalSetting}>
+                  <div onClick={() => { modalSetting(e.id) }}>
                     <Trash className="h-6 w-6 hover:scale-110 cursor-pointer" fill="#DB0062" />
                   </div>
                 </td>
               </tr>
-            ))}
+            ))) : (<tr className="text-center text-2xl text-gray-600 hover:bg-grass">
+              <td colSpan={6} className="py-10 px-0.5 border-b-[0.5px] border-blood">
+                No Playerlist
+              </td>
+            </tr>)}
           </tbody>
         </table>
       </div>

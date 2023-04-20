@@ -35,17 +35,17 @@ export default function Navbar() {
       </Link>
       <div className="flex items-center space-x-6 text-lg">
         {token &&<Link href={"/mygame"}>
-          <p className="text-[#80FFEE] text-lg tracking-tight hover:underline">
+          <p className={router.asPath == "/mygame" ? "text-[#80FFEE] underline drop-shadow-[0_0px_8px_rgba(255,255,255)]" :"text-[#80FFEE] hover:underline"}>
             My Game
           </p>
         </Link>}
         <Link href={"/gamelist"}>
-          <p className="text-[#80FFEE] text-lg tracking-tight hover:underline">
+          <p className={router.asPath == "/gamelist" ? "text-[#80FFEE] underline drop-shadow-[0_0px_8px_rgba(255,255,255)]" :"text-[#80FFEE] hover:underline"}>
             Game List
           </p>
         </Link>
-        <Link href={"/"}>
-          <p className="text-[#80FFEE] text-lg hover:underline">About</p>
+        <Link href={"/about"}>
+          <p className={router.asPath == "/about" ? "text-[#80FFEE] underline drop-shadow-[0_0px_8px_rgba(255,255,255)]" :"text-[#80FFEE] hover:underline"}>About</p>
         </Link>
         {!token && (
           <div className="flex px-6 space-x-2">
