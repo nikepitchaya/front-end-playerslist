@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import BaseButton from "../../../components/base/base-button";
 import BaseInput from "../../../components/base/base-input";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import api from "../../../plugins/api";
 import UserPlayer from "../../../models/response/UserPlayer";
 export default function AddPlayer() {
@@ -15,16 +15,19 @@ export default function AddPlayer() {
   const [action, setAction] = useState<string>("");
 
   const addNewPlayer = async () => {
+    if (!router.query.id) return;
     let form = {
-      user_game_category_id: parseInt(router.query.id),
+      user_game_category_id: parseInt(router.query.id[0]),
       type_id: parseInt(type),
       name: name,
       about: about,
       action: action,
     };
-    let response: UserPlayer = await api.userAddNewPlayer(form)
+    let response: UserPlayer = await api.userAddNewPlayer(form);
     if (response) {
-      router.push(`/mygame/playerlist?id=${router.query.id}&name=${router.query.name}`)
+      router.push(
+        `/mygame/playerlist?id=${router.query.id}&name=${router.query.name}`
+      );
     }
   };
 

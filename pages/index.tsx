@@ -1,8 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import UserMe from "../models/response/UserMe";
-import { getToken, getUser } from "../redux/user/slice";
+import { getUser } from "../redux/user/slice";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -12,7 +11,7 @@ export default function Home() {
       <div className="w-full relative">
         <div className="w-full absolute top-48 drop-shadow-xl">
           <h1 className="text-6xl animate-bounce text-center">
-            Welcome {me && <span className="text-blood"> {me.name}</span>} to {" "}
+            Welcome {me && <span className="text-blood"> {me.name}</span>} to{" "}
             <Link href="/mygame">
               <span className="text-[#FFEF00] hover:underline ">
                 Players List
@@ -20,7 +19,7 @@ export default function Home() {
             </Link>
           </h1>
         </div>
-        <Image src="/home_v2.jpeg" alt="Home" width={1920} height={0} />
+        <img src="/home.jpeg"></img>
         <div className={`${styles.grid} absolute bottom-4 right-4`}>
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Document &rarr;</h2>

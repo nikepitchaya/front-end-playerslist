@@ -1,8 +1,6 @@
 import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
 
 export default function PlayerInformation() {
-  const router = useRouter();
   //   const test: ParsedUrlQuery = router.query;
 
   return (

@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import BaseButton from "../../../components/base/base-button";
 import BaseInput from "../../../components/base/base-input";
 import BaseModal from "../../../components/base/base-modal";
-import Card from "../../../components/gamelist/card";
 import Trash from "../../../components/icon/trash";
 import UserPlayer from "../../../models/response/UserPlayer";
 import api from "../../../plugins/api";
+import dayjs from "dayjs";
 
 export default function PlayerList() {
   const router = useRouter();
@@ -16,50 +16,51 @@ export default function PlayerList() {
   const [player, setPlayer] = useState<UserPlayer[]>([]);
 
   // Modal setting
-  const [title, setTitle] = useState<string>("")
+  const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const modalSetting = async (id: number) => {
-    let title = "Delete Player"
-    await setTitle(title)
-    let content = `Do you want to delete "${player}" from your list? `
-    await setContent(content)
-    await setPlayerId(id)
-    setShowModal(true)
-  }
+    let title = "Delete Player";
+    await setTitle(title);
+    let content = `Do you want to delete "${player}" from your list? `;
+    await setContent(content);
+    await setPlayerId(id);
+    setShowModal(true);
+  };
 
   const getAllPlayer = async () => {
-    let userGameCategoryId = await parseInt(router.query.id)
-    let data = await api.userGetAllPlayer(userGameCategoryId)
+    if (!router.query.id) return;
+    let userGameCategoryId = await parseInt(router.query.id[0]);
+    let data = await api.userGetAllPlayer(userGameCategoryId);
     if (data) {
-      console.log(data)
-      setPlayer([...data])
+      console.log(data);
+      setPlayer([...data]);
     }
-  }
+  };
 
   const getPlayerType = (playerType: number): string => {
-    let response = ""
-    if (playerType == 6) response = "Masterful"
+    let response = "";
+    if (playerType == 6) response = "Masterful";
     else if (playerType == 5) response = "Stupid";
     else if (playerType == 4) response = "Cheat";
     else if (playerType == 3) response = "Distrub";
     else if (playerType == 2) response = "Toxic";
     else if (playerType == 1) response = "Kind";
-    return response
-  }
+    return response;
+  };
 
   const deletePlayer = async () => {
-    let data = await api.userDeletePlayer(playerId)
+    let data = await api.userDeletePlayer(playerId);
     if (data) {
       getAllPlayer();
       setShowModal(false);
     }
-  }
+  };
 
   useEffect(() => {
     getAllPlayer();
-  }, [])
+  }, []);
 
   return (
     <div className="w-full flex flex-col items-center py-8">
@@ -85,7 +86,9 @@ export default function PlayerList() {
           <BaseButton slot="Search" style="blood" className="w-1/2 h-[38px]" />
           <BaseButton
             onClick={() => {
-              router.push(`/mygame/addplayer?id=${router.query.id}&name=${router.query.name}`);
+              router.push(
+                `/mygame/addplayer?id=${router.query.id}&name=${router.query.name}`
+              );
             }}
             slot="Add Player"
             style="lime"
@@ -106,45 +109,68 @@ export default function PlayerList() {
             </tr>
           </thead>
           <tbody>
-            {player.length != 0 ? (player.map((e, i) => (
-              <tr key={i} className="text-center  text-gray-600 hover:bg-grass">
-                <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  {e.id}
-                </td>
-                <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  {e.name}
-                </td>
-                <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  {getPlayerType(e.type_id)}
-                </td>
-                <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  {e.updated_at}
-                </td>
-                <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  <BaseButton
-                    onClick={() => {
-                      router.push("/mygame/playerinfo/lnwza007");
-                    }}
-                    slot="View"
-                    style="grape"
-                    className="w-1/2"
-                  />
-                </td>
-                <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
-                  <div onClick={() => { modalSetting(e.id) }}>
-                    <Trash className="h-6 w-6 hover:scale-110 cursor-pointer" fill="#DB0062" />
-                  </div>
+            {player.length != 0 ? (
+              player.map((e, i) => (
+                <tr
+                  key={i}
+                  className="text-center  text-gray-600 hover:bg-grass"
+                >
+                  <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
+                    {e.id}
+                  </td>
+                  <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
+                    {e.name}
+                  </td>
+                  <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
+                    {getPlayerType(e.type_id)}
+                  </td>
+                  <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
+                    {dayjs(e.updated_at).format("YYYY-MM-DD")}
+                  </td>
+                  <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
+                    <BaseButton
+                      onClick={() => {
+                        router.push("/mygame/playerinfo/lnwza007");
+                      }}
+                      slot="View"
+                      style="grape"
+                      className="w-1/2"
+                    />
+                  </td>
+                  <td className="py-3 px-0.5 border-b-[0.5px] border-blood">
+                    <div
+                      onClick={() => {
+                        modalSetting(e.id);
+                      }}
+                    >
+                      <Trash
+                        className="h-6 w-6 hover:scale-110 cursor-pointer"
+                        fill="#DB0062"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className="text-center text-2xl text-gray-600 hover:bg-grass">
+                <td
+                  colSpan={6}
+                  className="py-10 px-0.5 border-b-[0.5px] border-blood"
+                >
+                  No Playerlist
                 </td>
               </tr>
-            ))) : (<tr className="text-center text-2xl text-gray-600 hover:bg-grass">
-              <td colSpan={6} className="py-10 px-0.5 border-b-[0.5px] border-blood">
-                No Playerlist
-              </td>
-            </tr>)}
+            )}
           </tbody>
         </table>
       </div>
-      <BaseModal onClick={deletePlayer} title={title} content={content} showModal={showModal} setShowModal={setShowModal} />
+      <BaseModal
+        onClick={deletePlayer}
+        title={title}
+        content={content}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </div>
   );
 }
