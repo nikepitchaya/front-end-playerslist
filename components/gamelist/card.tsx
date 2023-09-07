@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import BaseButton from "../base/base-button";
+import BaseButton from "../baseza/base-button";
 import GameList from "../../models/response/GameList";
 import api from "../../plugins/api";
 

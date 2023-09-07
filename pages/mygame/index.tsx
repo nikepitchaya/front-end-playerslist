@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import BaseButton from "../../components/base/base-button";
+import BaseButton from "../../components/baseza/base-button";
 import Card from "../../components/mygame/card";
 import { useEffect, useState } from "react";
 import GameList from "../../models/response/GameList";

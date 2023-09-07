@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import BaseButton from "../../../components/base/base-button";
-import BaseInput from "../../../components/base/base-input";
+import BaseButton from "../../../components/baseza/base-button";
+import BaseInput from "../../../components/baseza/base-input";
 import { useState } from "react";
 import api from "../../../plugins/api";
 import UserPlayer from "../../../models/response/UserPlayer";
