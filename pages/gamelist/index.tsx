@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import BaseButton from "../../components/base/base-button";
-import BaseInput from "../../components/base/base-input";
+import BaseButton from "../../components/baseza/base-button";
+import BaseInput from "../../components/baseza/base-input";
 import Card from "../../components/gamelist/card";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getToken } from "../../redux/user/slice";
 import GameList from "../../models/response/GameList"
 import api from "../../plugins/api";
-import BaseModal from "../../components/base/base-modal";
+import BaseModal from "../../components/baseza/base-modal";
 
 export default function Lobby() {
   const router = useRouter();

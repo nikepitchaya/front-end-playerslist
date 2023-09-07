@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import BaseButton from "../../../components/base/base-button";
-import BaseInput from "../../../components/base/base-input";
-import BaseModal from "../../../components/base/base-modal";
+import BaseButton from "../../../components/baseza/base-button";
+import BaseInput from "../../../components/baseza/base-input";
+import BaseModal from "../../../components/baseza/base-modal";
 import Trash from "../../../components/icon/trash";
 import UserPlayer from "../../../models/response/UserPlayer";
 import api from "../../../plugins/api";

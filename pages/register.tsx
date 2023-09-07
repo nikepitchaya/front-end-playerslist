@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Router, useRouter } from "next/router";
 import { useState } from "react";
-import BaseButton from "../components/base/base-button";
-import BaseInput from "../components/base/base-input";
-import BaseSelect from "../components/base/base-select";
+import BaseButton from "../components/baseza/base-button";
+import BaseInput from "../components/baseza/base-input";
+import BaseSelect from "../components/baseza/base-select";
 import api from "../plugins/api";
 
 interface Options {
