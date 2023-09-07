@@ -34,7 +34,7 @@ export default function PlayerList() {
     let userGameCategoryId = await parseInt(router.query.id[0]);
     let data = await api.userGetAllPlayer(userGameCategoryId);
     if (data) {
-      console.log(data);
+      console.log(data, "Maha LnwGreen Header");
       setPlayer([...data]);
     }
   };
